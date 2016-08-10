@@ -67,7 +67,7 @@ describe('User endpoints', function() {
             });
         });
         describe('POST', function() {
-            it.only('should allow adding a user', function() {
+            it('should allow adding a user', function() {
                 var user = {
                     username: 'joe'
                 };

@@ -11,7 +11,6 @@ var jsonParser = bodyParser.json();
 var User = require('./models/user.js');
 
 app.get('/users', function(req, res){
-    
     User.find(function(err, users) {
         if (err) {
             return res.sendStatus(500);
@@ -21,16 +20,29 @@ app.get('/users', function(req, res){
     });
 });    
 
-app.post('/users', function(req, res) {
+// app.get('/users/:userId', function(req, res){
+//   User.findOne(
+//       {_id:req.params.userId},
+//         function(err, user){ 
+//             if (err) {
+//                 return res.sendStatus(500);
+//         }
+//       res.json(user);
+// });
+
+// ???
+app.post('/users', jsonParser, function(req, res) {
     User.create({
         username: req.body.username
     }, function(err, user) {
         if (err) {
             return res.sendStatus(500);
         }
-        res.status(201).json(user);
+        res.status(201).location('/users/'+user._id).json({});
     });
 });
+
+
 
 // Add your API endpoints here
 
