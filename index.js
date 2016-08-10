@@ -20,18 +20,31 @@ app.get('/users', function(req, res){
     });
 });    
 
-// app.get('/users/:userId', function(req, res){
-//   User.findOne(
-//       {_id:req.params.userId},
-//         function(err, user){ 
-//             if (err) {
-//                 return res.sendStatus(500);
-//         }
-//       res.json(user);
-// });
+app.get('/users/:userId', function(req, res){
+  User.findOne(
+      {_id:req.params.userId},
+        function(err, user){ 
+            if (err) {
+                return res.sendStatus(500);
+        }
+        if (user){
+            res.status(200).json(user);
+            console.log('200 OK');
+        }
+        if (!user) {
+             console.log('404 error');
+        return res.status(404).json({message: 'User not found'})
+        }
+    });
+});
 
-// ???
 app.post('/users', jsonParser, function(req, res) {
+    if (!req.body.username){
+        return res.status(422).json({message: 'Missing field: username'})
+    }
+     if (typeof req.body.username !== 'string'){
+        return res.status(422).json({message: 'Incorrect field type: username'})
+    }
     User.create({
         username: req.body.username
     }, function(err, user) {
