@@ -1,10 +1,36 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
 
 var app = express();
 
 var jsonParser = bodyParser.json();
+
+var User = require('./models/user.js');
+
+app.get('/users', function(req, res){
+    
+    User.find(function(err, users) {
+        if (err) {
+            return res.sendStatus(500);
+        }
+        res.json(users);
+        
+    });
+});    
+
+app.post('/users', function(req, res) {
+    User.create({
+        username: req.body.username
+    }, function(err, user) {
+        if (err) {
+            return res.sendStatus(500);
+        }
+        res.status(201).json(user);
+    });
+});
 
 // Add your API endpoints here
 

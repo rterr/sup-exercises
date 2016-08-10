@@ -67,11 +67,11 @@ describe('User endpoints', function() {
             });
         });
         describe('POST', function() {
-            it('should allow adding a user', function() {
+            it.only('should allow adding a user', function() {
                 var user = {
                     username: 'joe'
                 };
-
+               
                 // Add a user
                 return chai.request(app)
                     .post(this.listPattern.stringify())
