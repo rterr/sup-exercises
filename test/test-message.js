@@ -64,7 +64,7 @@ describe('Message endpoints', function() {
                     });
             });
 
-            it.only('should return a list of messages', function() {
+            it('should return a list of messages', function() {
                 var messageA = {
                     from: this.alice._id,
                     to: this.bob._id,
