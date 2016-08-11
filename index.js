@@ -148,8 +148,8 @@ app.get('/messages', function(req, res) {
          if (!messages) {
             console.log('404 error');
             return res.status(404).json({message: 'Message not found'})
-            } 
-         res.json(messages);
+            }
+         res.json(messages)
      });
      
 });
@@ -189,12 +189,41 @@ POST
 */
 
 app.post('/messages', jsonParser, function(req, res) {
-    // if (!req.body.username){
-    //     return res.status(422).json({message: 'Missing field: username'})
-    // }
-    //  if (typeof req.body.username !== 'string'){
-    //     return res.status(422).json({message: 'Incorrect field type: username'})
-    // }
+    if (!req.body.text){
+        return res.status(422).json({message: 'Missing field: text'})
+    }
+    if (typeof req.body.text !== 'string'){
+        return res.status(422).json({message: 'Incorrect field type: text'})
+    }
+    if (typeof req.body.to !== 'string'){
+        return res.status(422).json({message: 'Incorrect field type: to'})
+    }
+    if (typeof req.body.from !== 'string'){
+        return res.status(422).json({message: 'Incorrect field type: from'})
+    }
+
+    // User.findById(
+    //     req.body.from._id,
+    //     function(err, user){
+    //         if (err) {
+    //             return res.sendStatus(500);
+    //         }
+    //         if (!user) {
+    //             return res.status(422).json({message: 'Incorrect field value: from'})
+    //         }
+    //     });
+
+    // User.findOne(
+    //     {_id:req.body.to._id},
+    //     function(err, user){
+    //         if (err) {
+    //             return res.sendStatus(500);
+    //         }
+    //         if (!user) {
+    //             return res.status(422).json({message: 'Incorrect field value: to'})
+    //         }
+    //     });
+
     Message.create({
         from: req.body.from,
         to: req.body.to,
